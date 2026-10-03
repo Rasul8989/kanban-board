@@ -1,0 +1,37 @@
+.boards-list {
+    padding: 0 20px 20px;
+}
+
+.add-board {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.board-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    max-width: 500px;
+}
+
+.board-item a {
+    flex: 1;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.boards-list input,
+.boards-list button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+}

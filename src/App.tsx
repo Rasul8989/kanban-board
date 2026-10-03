@@ -1,0 +1,22 @@
+import { Routes, Route } from 'react-router-dom'
+import Login from './pages/Login'
+import BoardsList from './pages/BoardsList'
+import Profile from './pages/Profile'
+import Board from './components/Board'
+import ThemeToggle from './components/ThemeToggle'
+
+function App() {
+    return (
+        <>
+            <ThemeToggle />
+            <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/boards" element={<BoardsList />} />
+                <Route path="/boards/:id" element={<Board />} />
+                <Route path="/profile" element={<Profile />} />
+            </Routes>
+        </>
+    )
+}
+
+export default App

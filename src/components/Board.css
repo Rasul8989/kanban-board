@@ -1,0 +1,63 @@
+.board {
+    padding: 20px;
+}
+
+.columns {
+    display: flex;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.column {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 12px;
+    min-width: 250px;
+}
+
+.task-card {
+    background-color: var(--card-bg-light);
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.task-form input,
+.task-form select,
+.task-form button,
+.filters input,
+.filters select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.task-card[data-priority="low"] {
+    border-left: 4px solid #4caf50;
+}
+
+.task-card[data-priority="medium"] {
+    border-left: 4px solid #ff9800;
+}
+
+.task-card[data-priority="high"] {
+    border-left: 4px solid #f44336;
+}

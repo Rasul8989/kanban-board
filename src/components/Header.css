@@ -1,0 +1,35 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-title {
+    margin: 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.header-right {
+    justify-self: end;
+}
+
+.header-link {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.header-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-profile:hover {
+    opacity: 0.8;
+}
