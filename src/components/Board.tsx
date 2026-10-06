@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Column from './Column'
 import TaskForm from './TaskForm'
@@ -18,16 +18,20 @@ interface Task {
 }
 
 function Board() {
-    const { id } = useParams()
+    const { id } = useParams<{ id: string }>()
 
     const [tasks, setTasks] = useState<Task[]>(() => {
-        const saved = localStorage.getItem('tasks-${id}')
+        if (!id) return []
+        const saved = localStorage.getItem(`board-tasks-${id}`)
         return saved ? JSON.parse(saved) : []
     })
 
-    useEffect(() => {
-        localStorage.setItem('tasks-${id}', JSON.stringify(tasks))
-    }, [tasks, id])
+    function persist(updatedTasks: Task[]) {
+        setTasks(updatedTasks)
+        if (id) {
+            localStorage.setItem(`board-tasks-${id}`, JSON.stringify(updatedTasks))
+        }
+    }
 
     const [searchQuery, setSearchQuery] = useState('')
     const [priorityFilter, setPriorityFilter] = useState<'all' | 'low' | 'medium' | 'high'>('all')
@@ -37,18 +41,18 @@ function Board() {
 
     const filteredTasks = tasks.filter((task) => {
         const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase())
-        const matchesPriority = priorityFilter === 'all'|| task.priority === priorityFilter
+        const matchesPriority = priorityFilter === 'all' || task.priority === priorityFilter
         const matchesAssignee = task.assignee.toLowerCase().includes(assigneeFilter.toLowerCase())
-        const matchesTag = tagFilter === ''|| task.tags.some((tag) => tag.toLowerCase().includes(tagFilter.toLowerCase()))
+        const matchesTag = tagFilter === '' || task.tags.some((tag) => tag.toLowerCase().includes(tagFilter.toLowerCase()))
         return matchesSearch && matchesPriority && matchesAssignee && matchesTag
     })
 
     function handleAddTask(newTask: Task) {
-        setTasks([...tasks, newTask])
+        persist([...tasks, newTask])
     }
 
     function handleMoveTask(taskId: number, newStatus: 'todo' | 'in-progress' | 'done') {
-        setTasks(
+        persist(
             tasks.map((task) =>
                 task.id === taskId ? { ...task, status: newStatus } : task
             )
@@ -56,14 +60,14 @@ function Board() {
     }
 
     function handleSaveTask(updatedTask: Task) {
-        setTasks(
+        persist(
             tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
         )
         setSelectedTask(null)
     }
 
     function handleDeleteTask(taskId: number) {
-        setTasks(tasks.filter((task) => task.id !== taskId))
+        persist(tasks.filter((task) => task.id !== taskId))
         setSelectedTask(null)
     }
 
@@ -100,6 +104,7 @@ function Board() {
                     placeholder="Filter by tag"
                 />
             </div>
+
             <div className="columns">
                 <Column
                     title="To Do"

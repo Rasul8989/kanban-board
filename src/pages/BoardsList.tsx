@@ -7,10 +7,7 @@ import type { BoardItem } from '../types'
 function BoardsList() {
     const [boards, setBoards] = useState<BoardItem[]>(() => {
         const saved = localStorage.getItem('boards')
-        return saved ? JSON.parse(saved) : [
-            { id: 1, name: 'Project Alpha' },
-            { id: 2, name: 'Marketing Tasks' }
-        ]
+        return saved ? JSON.parse(saved) : []
     })
 
     const [newBoardName, setNewBoardName] = useState('')
@@ -34,7 +31,7 @@ function BoardsList() {
 
     function handleDelete(id: number) {
         setBoards(boards.filter((b) => b.id !== id))
-        localStorage.removeItem('tasks-${id}')
+        localStorage.removeItem(`board-tasks-${id}`)
     }
 
     return (
@@ -54,7 +51,7 @@ function BoardsList() {
 
                 {boards.map((board) => (
                     <div key={board.id} className="board-item">
-                        <Link to={'/boards/${board.id}'}>{board.name}</Link>
+                        <Link to={`/boards/${board.id}`}>{board.name}</Link>
                         <button onClick={() => handleRename(board.id)}>Rename</button>
                         <button onClick={() => handleDelete(board.id)}>Delete</button>
                     </div>
